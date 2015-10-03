@@ -5,8 +5,6 @@
     <meta charset="utf-8">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/1.6.19/topojson.min.js"></script>
-    <!-- <script src="http://d3js.org/d3.v2.min.js" charset="utf-8"></script> -->
-    <!-- <link type="text/css" rel="stylesheet" href="style.css"/> -->
     <style type="text/css">
 
 
@@ -55,18 +53,6 @@
   stroke: #fff;
 }
 
-/*div.tooltip {
- position: absolute;
- text-align: left;
- width: 150px;
- height: 25px;
- padding: 2px;
- font-size: 11px;
- pointer-events: none;
- font-family: sans-serif;
- color: black;
-}*/
-
 path.arc {
   pointer-events: none;
   fill: none;
@@ -78,13 +64,6 @@ path.cell {
   fill: none;
   pointer-events: all;
 }
-
-/*circle {
-  fill: steelblue;
-  fill-opacity: .8;
-  stroke: #fff;
-
-}*/
 
 .graticule {
   fill: none;
@@ -98,13 +77,10 @@ path.cell {
   stroke: lightgrey;
 }
 
-
 .state-boundary {
   fill: none;
   stroke: lightgrey;
 }
-
-
 
 #cells.voronoi path.cell {
   stroke: brown;
@@ -122,38 +98,32 @@ path.cell {
       
     </h1>
     <h2>
-      <div> <div style="position:absolute;top: 100px;right:15%;font-size: 16px;
+      <div> <div style="position:absolute;bottom: 20%;left:5%;font-size: 16px;
         font-family: sans-serif;font-style: normal;font-weight: normal; opacity: 0.7;">
       <span></span>
     </h2>
 
-<!--       <h3>
-        <div> <div style="position:absolute;right: 400px;
+      <h3>
+        <div> <div style="position:absolute;right: 500px;
         font-family: sans-serif;font-style: normal;font-weight: normal;font-size: 18px;">
       <span></span>
     </h3>
     </div>
-    <div style="position:absolute;bottom:70px;font-size:18px;">
+   <!--  <div style="position:absolute;bottom:70px;font-size:18px;">
       <input type="checkbox" id="voronoi"> <label for="voronoi">Voronoi</label>
       </div> -->
 
-   <div> <div style="position:absolute;bottom: 100px;right: 150px;font-style: normal;font-weight: normal;">
+<!--    <div> <div style="position:absolute;bottom: 100px;right: 150px;font-style: normal;font-weight: normal;">
    <svg class="chart"></svg>
     </div>
-
-    <div id='dashboard' style="position:absolute;bottom: 100px;left: 150px;">
+ -->
+    <div id='dashboard' style="position:absolute;bottom: 0px;left: 100px; opacity: 0.9;">
 
     <style>
-/*body{
-    width:1060px;
-    margin:50px auto;
-}*/
-/*path {  stroke: #fff; }
-path:hover {  opacity:0.9; }
-rect:hover {  fill:blue; }
-.axis {  font: 10px sans-serif; }
+
+.axis {  font: 8px sans-serif; }
 .legend tr{    border-bottom:1px solid grey; }
-.legend tr:first-child{    border-top:1px solid grey; }*/
+.legend tr:first-child{    border-top:1px solid grey; }
 
 .axis path,
 .axis line {
@@ -169,10 +139,12 @@ rect:hover {  fill:blue; }
     border-collapse: collapse;
     border-spacing: 0px;
 }
+
 .legend td{
     padding:4px 5px;
     vertical-align:bottom;
 }
+
 .legendFreq, .legendPerc{
     align:right;
     width:50px;
@@ -195,8 +167,8 @@ var projection = d3.geo.albers()
     .rotate([96, 0])
     .center([-.6, 38.7])
     .parallels([29.5, 45.5])
-    .scale(1250)
-    .translate([w / 2 - 100, h / 2 - 100])
+    .scale(900)
+    .translate([w / 2 - 200, h / 2 - 100])
     .precision(.1);
 
 var path = d3.geo.path()
@@ -379,53 +351,33 @@ d3.csv("flights-airport_all.csv", function(flights) {
         .attr("d", function(d, i) { return "M" + polygons[i].join("L") + "Z"; })
         .on("mouseover", function(d, i) { 
 
-        //     d3.select(this)
-        // .transition().duration(1000);
-        // .style("opacity", opacityCircle);
 
-         d3.select("h2 span").text("Airport Details").style("font-size", "22px")
-         .append("p").text(d.name).style("font-size", "16px")
+         d3.select("h2 span").text("").style("font-size", "22px")
+         .append("p").text(d.name).style("font-size", "18px")
          .append("p").text(d.city + ", " + d.state)
-         .append("p").text("Flights: " + Airport_count[d.iata])
-         .append("p").text("Flights Cancelled: " + Cancelled_count[d.iata])
-         .append("p").text("Flights Diverted: " + Diverted_count[d.iata])
+         .append("p").text("Flights: " + Airport_count[d.iata]);
+         // .append("p").text("Flights Cancelled: " + Cancelled_count[d.iata])
+         // .append("p").text("Flights Diverted: " + Diverted_count[d.iata])
          // .append("p").text("Percentage Cancelled: " + Math.round((+Cancelled_count[d.iata]) /(+Airport_count[d.iata])*100) + "%")
-         .append("p").text("Avg Carrier Delay: " + Math.round(carrier_delay[d.iata]) + " min")
-         .append("p").text("Avg Weather Delay: " + Math.round(weather_delay[d.iata]) + " min")         
-         .append("p").text("Avg Security Delay: " + Math.round(sec_delay[d.iata]) + " min")
-         .append("p").text("Avg Late Arrival Delay: " + Math.round(arr_delay[d.iata]) + " min")
-         .append("p").text("Avg National Air System Delay: " + Math.round(nas_delay[d.iata]) + " min")
-         .append("p").text("Avg Late Aircraft Delay: " + Math.round(late_aircraft_delay[d.iata]) + " min");
+         // .append("p").text("Avg Carrier Delay: " + Math.round(carrier_delay[d.iata]) + " min")
+         // .append("p").text("Avg Weather Delay: " + Math.round(weather_delay[d.iata]) + " min")         
+         // .append("p").text("Avg Security Delay: " + Math.round(sec_delay[d.iata]) + " min")
+         // .append("p").text("Avg Late Arrival Delay: " + Math.round(arr_delay[d.iata]) + " min")
+         // .append("p").text("Avg National Air System Delay: " + Math.round(nas_delay[d.iata]) + " min")
+         // .append("p").text("Avg Late Aircraft Delay: " + Math.round(late_aircraft_delay[d.iata]) + " min");
          
 
-         })
-			   .on("click",click);
+        updateBarChart(d, i);
+      
 
-			   function click(d){  // utility function to be called on click.
-            // filter for selected state.
-            // var st = fData.filter(function(s){ return s.State == d[0];})[0],
-            //     nD = d3.keys(st.freq).map(function(s){ return {type:s, freq:st.freq[s]};});
-               
-            // call update functions of pie-chart and legend.    
-            // pC.update(nD);
-            // leg.update(nD);
-            
-
-        }
-        
-        function mouseout(d){    // utility function to be called on mouseout.
-            // reset the pie-chart and legend.    
-            // pC.update(tF);
-            // leg.update(tF);
-
-         }
+         });
 
           //Create color legend for indicating the biggest reason of cancellation
             var z = d3.scale.category10();
             var reasons = ['Carrier', 'Weather', 'Security', 'National Air System', 'Late Aircraft'];
             var legend_color = svg.append("g")
                 .attr("class", "legend")
-                .attr("transform", "translate(" + (w - 250) + "," + (h - 300) + ")")
+                .attr("transform", "translate(" + (w - 450) + "," + (h - 300) + ")")
               .selectAll("g")
               .data([0, 1, 2, 3, 4])
               .enter().append("g");
@@ -448,7 +400,7 @@ d3.csv("flights-airport_all.csv", function(flights) {
                   .attr("x", -20)
                   .attr("text-anchor", "start")
                   .attr('fill', 'lightgrey')
-                  .text("main reason for delay")
+                  .text("most frequent delay")
 
 
               g.selectAll("path.arc")
@@ -469,21 +421,18 @@ d3.csv("flights-airport_all.csv", function(flights) {
 
 
 
- 
-
-
 function dashboard(id, fData){
     var barColor = 'steelblue';
-    function segColor(c){ return {Total:"#807dba", Cancelled:"#e08214",Diverted:"#41ab5d"}[c]; }
+    function segColor(c){ return {Normal:"#807dba", Cancelled:"#e08214",Diverted:"#41ab5d"}[c]; }
     
     // compute total for each state.
-    fData.forEach(function(d){d.total=d.freq.Total+d.freq.Cancelled+d.freq.Diverted;});
+    fData.forEach(function(d){d.total=d.freq.Normal+d.freq.Cancelled+d.freq.Diverted;});
     
     // function to handle histogram.
     function histoGram(fD){
         var hG={},    hGDim = {t: 60, r: 0, b: 30, l: 0};
         hGDim.w = 500 - hGDim.l - hGDim.r, 
-        hGDim.h = 300 - hGDim.t - hGDim.b;
+        hGDim.h = 200 - hGDim.t - hGDim.b;
             
         //create svg for histogram.
         var hGsvg = d3.select(id).append("svg")
@@ -515,36 +464,32 @@ function dashboard(id, fData){
             .attr("width", x.rangeBand())
             .attr("height", function(d) { return hGDim.h - y(d[1]); })
             .attr('fill',barColor);
-            // .on("mouseover",mouseover)// mouseover is defined below.
-            // .on("mouseout",mouseout);// mouseout is defined below.
+
             
         //Create the frequency labels above the rectangles.
         bars.append("text").text(function(d){ return d3.format(",")(d[1])})
             .attr("x", function(d) { return x(d[0])+x.rangeBand()/2; })
             .attr("y", function(d) { return y(d[1])-5; })
             .attr("text-anchor", "middle");
-        
-        // function mouseover(d){  // utility function to be called on mouseover.
-        //     // filter for selected state.
-        //     var st = fData.filter(function(s){ return s.State == d[0];})[0],
-        //         nD = d3.keys(st.freq).map(function(s){ return {type:s, freq:st.freq[s]};});
-               
-        //     // call update functions of pie-chart and legend.    
-        //     pC.update(nD);
-        //     leg.update(nD);
-        // }
-        
-        // function mouseout(d){    // utility function to be called on mouseout.
-        //     // reset the pie-chart and legend.    
-        //     pC.update(tF);
-        //     leg.update(tF);
-        // }
 
-        // function click(d){
+        var yAxis = d3.svg.axis()
+                    .scale(y)
+                    .orient("left");
 
-        //     pC.update(tF);
-        //     leg.update(tF);
-        // }
+        bars.append("g")
+            .attr("class", "y axis")
+            .call(yAxis)
+            .append("text")
+            .attr("transform", "rotate(-90)")
+            .attr("y", 6)
+            .style("text-anchor", "end")
+            .text("Average Delay in minutes")
+            .style("font-size", "8px")
+            // .style("font-family","sans-serif")
+            // .style("font-weight", "normal")
+            .style("opacity",0.4);
+   
+        
         
         // create function to update the bars. This will be used by pie-chart.
         hG.update = function(nD, color){
@@ -568,133 +513,91 @@ function dashboard(id, fData){
         return hG;
     }
     
-    // function to handle pieChart.
-    function pieChart(pD){
-        var pC ={},    pieDim ={w:250, h: 250};
-        pieDim.r = Math.min(pieDim.w, pieDim.h) / 2;
-                
-        // create svg for pie chart.
-        var piesvg = d3.select(id).append("svg")
-            .attr("width", pieDim.w).attr("height", pieDim.h).append("g")
-            .attr("transform", "translate("+pieDim.w/2+","+pieDim.h/2+")");
-        
-        // create function to draw the arcs of the pie slices.
-        var arc = d3.svg.arc().outerRadius(pieDim.r - 10).innerRadius(0);
 
-        // create a function to compute the pie slice angles.
-        var pie = d3.layout.pie().sort(null).value(function(d) { return d.freq; });
-
-        // Draw the pie slices.
-        piesvg.selectAll("path").data(pie(pD)).enter().append("path").attr("d", arc)
-            .each(function(d) { this._current = d; })
-            .style("fill", function(d) { return segColor(d.data.type); });
-            // .on("mouseover",mouseover).on("mouseout",mouseout);
-
-        // create function to update pie-chart. This will be used by histogram.
-        // pC.update = function(nD){
-        //     piesvg.selectAll("path").data(pie(nD)).transition().duration(500)
-        //         .attrTween("d", arcTween);
-        // }        
-        // Utility function to be called on mouseover a pie slice.
-        // function mouseover(d){
-        //     // call the update function of histogram with new data.
-        //     hG.update(fData.map(function(v){ 
-        //         return [v.State,v.freq[d.data.type]];}),segColor(d.data.type));
-        // }
-        // //Utility function to be called on mouseout a pie slice.
-        // function mouseout(d){
-        //     // call the update function of histogram with all data.
-        //     hG.update(fData.map(function(v){
-        //         return [v.State,v.total];}), barColor);
-        // }
-        // Animating the pie-slice requiring a custom function which specifies
-        // how the intermediate paths should be drawn.
-        // function arcTween(a) {
-        //     var i = d3.interpolate(this._current, a);
-        //     this._current = i(0);
-        //     return function(t) { return arc(i(t));    };
-        // }    
-        return pC;
-    }
-    
-    // function to handle legend.
-    function legend(lD){
-        var leg = {};
-            
-        // create table for legend.
-        var legend = d3.select(id).append("table").attr('class','legend');
-        
-        // create one row per segment.
-        var tr = legend.append("tbody").selectAll("tr").data(lD).enter().append("tr");
-            
-        // create the first column for each segment.
-        tr.append("td").append("svg").attr("width", '16').attr("height", '16').append("rect")
-            .attr("width", '16').attr("height", '16')
-      .attr("fill",function(d){ return segColor(d.type); });
-            
-        // create the second column for each segment.
-        tr.append("td").text(function(d){ return d.type;});
-
-        // create the third column for each segment.
-        tr.append("td").attr("class",'legendFreq')
-            .text(function(d){ return d3.format(",")(d.freq);});
-
-        // create the fourth column for each segment.
-        tr.append("td").attr("class",'legendPerc')
-            .text(function(d){ return getLegend(d,lD);});
-
-        // Utility function to be used to update the legend.
-        leg.update = function(nD){
-            // update the data attached to the row elements.
-            var l = legend.select("tbody").selectAll("tr").data(nD);
-
-            // update the frequencies.
-            l.select(".legendFreq").text(function(d){ return d3.format(",")(d.freq);});
-
-            // update the percentage column.
-            l.select(".legendPerc").text(function(d){ return getLegend(d,nD);});        
-        }
-        
-        function getLegend(d,aD){ // Utility function to compute percentage.
-            return d3.format("%")(d.freq/d3.sum(aD.map(function(v){ return v.freq; })));
-        }
-
-        return leg;
-    }
     
     // calculate total frequency by segment for all state.
-    var tF = ['Total','Cancelled','Diverted'].map(function(d){ 
+    var tF = ['Normal','Cancelled','Diverted'].map(function(d){ 
         return {type:d, freq: d3.sum(fData.map(function(t){ return t.freq[d];}))}; 
     });    
     
     // calculate total frequency by state for all segment.
     var sF = fData.map(function(d){return [d.State,d.total];});
 
-    var hG = histoGram(sF), // create the histogram.
-        pC = pieChart(tF), // create the pie-chart.
-        leg= legend(tF);  // create the legend.
+    var hG = histoGram(sF) // create the histogram.
+  
 }
 
 
-// d3.select(this).on("click", function(d) {
+
+var freqData = [
+        {State:'Carrier Delay',freq:{Normal:0, Cancelled:0, Diverted:0}}
+        ,{State:'Weather Delay',freq:{Normal:0, Cancelled:0, Diverted:0}}
+        ,{State:'Security Delay',freq:{Normal:0, Cancelled:0, Diverted:0}}
+        ,{State:'National Air System Delay',freq:{Normal:0, Cancelled:0, Diverted:0}}
+        ,{State:'Late Aircraft Delay',freq:{Normal:0, Cancelled:0, Diverted:0}}
+        ]
 
 
-
-// if(typeof freqData != "undefined") {
-// d3.selectAll('dashboard').remove();
-// }
-
-var freqData=[
-{State:'Carrier Delay',freq:{Total:3333, Cancelled:1319, Diverted:249}}
-,{State:'Weather Delay',freq:{Total:1101, Cancelled:412, Diverted:674}}
-,{State:'Security Delay',freq:{Total:932, Cancelled:2149, Diverted:418}}
-,{State:'National Air System Delay',freq:{Total:832, Cancelled:1152, Diverted:1862}}
-,{State:'Late Aircraft Delay',freq:{Total:4481, Cancelled:3304, Diverted:948}}
-];
 
 dashboard('#dashboard',freqData);
 
- });
+ function updateBarChart(d, i) {
+
+            fD = [
+              {State:'Carrier Delay',freq:{Total:Math.round(carrier_delay[d.iata])}},
+              {State:'Weather Delay',freq:{Total:Math.round(weather_delay[d.iata])}},
+              {State:'Security Delay',freq:{Total:Math.round(sec_delay[d.iata])}},
+              {State:'National Air System Delay',freq:{Total:Math.round(nas_delay[d.iata])}},
+              {State:'Late Aircraft Delay',freq:{Total:Math.round(late_aircraft_delay[d.iata])}}
+            ];
+
+            // These constants and scales could go elsewhere
+            var barColor = 'steelblue';
+            var hG={},    hGDim = {t: 60, r: 0, b: 30, l: 0};
+            hGDim.w = 500 - hGDim.l - hGDim.r;
+            hGDim.h = 200 - hGDim.t - hGDim.b;
+
+            var x = d3.scale.ordinal().rangeRoundBands([0, hGDim.w], 0.1)
+                      .domain(fD.map(function(d) { return d.State; } ));
+
+            var y = d3.scale.linear().range([hGDim.h, 0])
+                    .domain([0, d3.max(fD, function(d) { return d.freq.Total; })]);
+
+
+            // Update Exit and Enter selections
+            var bars = d3.select("div#dashboard")
+                         .selectAll("g.bar")
+                         .data(fD);
+
+            bars.exit().remove();
+
+            bars.enter()
+                .append("rect")
+                .attr("class", "bar")
+                .append("text")
+                .attr("text-anchor", "middle");
+
+            // Update the rectangles.
+            bars.transition().duration(250)
+                .select("rect")
+                .attr("x", function(d) { return x(d.State); })
+                .attr("y", function(d) { return y(d.freq.Total); })
+                .attr("width", x.rangeBand())
+                .attr("height", function(d) { return hGDim.h - y(d.freq.Total); })
+                .attr('fill', barColor);
+
+            // Update the text labels
+            bars.transition().duration(250)
+                .select("text")
+                .text(function(d){ return d3.format(",")(d.freq.Total); })
+                .attr("x", function(d) { return x(d.State) + x.rangeBand()/2; })
+                .attr("y", function(d) { return y(d.freq.Total)-5; })
+                .attr("text-anchor", "middle");
+          }
+
+
+
+  });
 });
 
 
